@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <title>Writing your own thoughts</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: "Alata", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    </style>
+  </head>
+  <body bgcolor="#eaeded">
+    <h1>Write your own thoughts</h1>
+    <h3>(anything)</h3>
+ 
+<div class="card">
+  <textarea placeholder="Type your thoughts" id="myTextArea" rows="5" cols="40" placeholder="Type something...">
+  </textarea>
+  <h4>Words: <span id="wordCount">0</span></h4>
+  <h4>Characters: <span id="charCount">0</span></h4>
+  <button onclick="clearText()">Clear</button>
+<script>
+  function clearText() {
+    textarea.value = "";
+    wordCountSpan.textContent = "0";
+    charCountSpan.textContent = "0";
+    localStorage.removeItem('text');
+  }
+</script>
+  
+  <button onclick="downloadText()">Download</button>
+<script>
+  function downloadText() {
+    const text = textarea.value;
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'my_thoughts.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+<button id="themeToggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+<script>
+  const toggleButton = document.getElementById("themeToggle");
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    toggleButton.textContent = "Toggle Light Mode";
+  } else {
+    toggleButton.textContent = "Toggle Dark Mode";
+  }
+}
+</script>
+<style>
+  .dark-mode {
+    background-color: #121212;
+    color: white;
+  }
+  .dark-mode textarea {
+    background-color: #1e1e1e;
+    color: white;
+  }
+</style>
+
+
+</div>
+    
+    <h2>Time spent: <span id="timeSpent">0:00</span></h2>
+
+<script>
+  let secondsSpent = 0;
+  const timeDisplay = document.getElementById("timeSpent");
+
+  setInterval(() => {
+    secondsSpent++;
+    const minutes = Math.floor(secondsSpent / 60);
+    const seconds = secondsSpent % 60;
+    timeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }, 1000); // Update every second
+</script>
+  <script src="script.js"></script>
+    
+    </body>
+</html>
